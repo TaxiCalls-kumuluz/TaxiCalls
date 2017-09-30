@@ -1,0 +1,21 @@
+version: '2'
+services:
+  discovery:
+    ports:
+      - 8001:2181
+
+  routes:
+    ports:
+      - 3001:8080
+
+  routes-database:
+    ports:
+      - 4001:3306
+
+  passenger:
+    ports:
+      - 3000:8080
+
+  passenger-database:
+    ports:
+      - 4000:3306

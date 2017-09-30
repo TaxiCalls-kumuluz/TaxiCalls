@@ -1,0 +1,84 @@
+version: '2'
+services:
+  discovery:
+    image: zookeeper:3.4
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  ui:
+    build: ui
+    ports:
+      - 80:8080
+    links:
+      - discovery
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  routes:
+    build: routes
+    links:
+      - routes-database
+      - discovery
+    environment:
+      DATABASE_USER: $DATABASE_USER
+      DATABASE_PASS: $DATABASE_PASS
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  routes-database:
+    image: mariadb:10
+    expose:
+      - 3306
+    volumes:
+      - ./routes-data:/var/lib/mysql
+    environment:
+      MYSQL_USER: $DATABASE_USER
+      MYSQL_ROOT_PASSWORD: $DATABASE_PASS
+      MYSQL_DATABASE: routes
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  passenger:
+    build: passenger
+    links:
+      - passenger-database
+    environment:
+      DATABASE_USER: $DATABASE_USER
+      DATABASE_PASS: $DATABASE_PASS
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  passenger-database:
+    image: mariadb:10
+    expose:
+      - 3306
+    volumes:
+      - passenger-data:/var/lib/mysql
+    environment:
+      MYSQL_USER: $DATABASE_USER
+      MYSQL_ROOT_PASSWORD: $DATABASE_PASS
+      MYSQL_DATABASE: passenger
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+volumes:
+  passenger-data:
+  routes-data:
