@@ -1,4 +1,7 @@
 /ui
-/routes
 /passenger
 /utils
+/billing
+/driver
+/notification
+/trip
