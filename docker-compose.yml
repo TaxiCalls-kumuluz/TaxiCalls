@@ -20,36 +20,6 @@ services:
         max-size: "10m"
         max-file: "10"
 
-  routes:
-    build: routes
-    links:
-      - routes-database
-      - discovery
-    environment:
-      DATABASE_USER: $DATABASE_USER
-      DATABASE_PASS: $DATABASE_PASS
-    restart: unless-stopped
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-
-  routes-database:
-    image: mariadb:10
-    expose:
-      - 3306
-    volumes:
-      - ./routes-data:/var/lib/mysql
-    environment:
-      MYSQL_USER: $DATABASE_USER
-      MYSQL_ROOT_PASSWORD: $DATABASE_PASS
-      MYSQL_DATABASE: routes
-    restart: unless-stopped
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-
   passenger:
     build: passenger
     links:
@@ -79,6 +49,126 @@ services:
         max-size: "10m"
         max-file: "10"
 
+  trip:
+    build: trip
+    links:
+      - trip-database
+      - discovery
+    environment:
+      DATABASE_USER: $DATABASE_USER
+      DATABASE_PASS: $DATABASE_PASS
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  trip-database:
+    image: mariadb:10
+    expose:
+      - 3306
+    volumes:
+      - trip-data:/var/lib/mysql
+    environment:
+      MYSQL_USER: $DATABASE_USER
+      MYSQL_ROOT_PASSWORD: $DATABASE_PASS
+      MYSQL_DATABASE: trip
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  notification:
+    build: notification
+    links:
+      - notification-database
+    environment:
+      DATABASE_USER: $DATABASE_USER
+      DATABASE_PASS: $DATABASE_PASS
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  notification-database:
+    image: mariadb:10
+    expose:
+      - 3306
+    volumes:
+      - notification-data:/var/lib/mysql
+    environment:
+      MYSQL_USER: $DATABASE_USER
+      MYSQL_ROOT_PASSWORD: $DATABASE_PASS
+      MYSQL_DATABASE: notification
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  driver:
+    build: driver
+    links:
+      - driver-database
+    environment:
+      DATABASE_USER: $DATABASE_USER
+      DATABASE_PASS: $DATABASE_PASS
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  driver-database:
+    image: mariadb:10
+    expose:
+      - 3306
+    volumes:
+      - driver-data:/var/lib/mysql
+    environment:
+      MYSQL_USER: $DATABASE_USER
+      MYSQL_ROOT_PASSWORD: $DATABASE_PASS
+      MYSQL_DATABASE: driver
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  billing:
+    build: billing
+    links:
+      - billing-database
+    environment:
+      DATABASE_USER: $DATABASE_USER
+      DATABASE_PASS: $DATABASE_PASS
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+  billing-database:
+    image: mariadb:10
+    expose:
+      - 3306
+    volumes:
+      - billing-data:/var/lib/mysql
+    environment:
+      MYSQL_USER: $DATABASE_USER
+      MYSQL_ROOT_PASSWORD: $DATABASE_PASS
+      MYSQL_DATABASE: billing
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
 volumes:
   passenger-data:
-  routes-data:
+  trip-data:
+  notification-data:
+  driver-data:
+  billing-data:

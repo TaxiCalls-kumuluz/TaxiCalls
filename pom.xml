@@ -13,9 +13,12 @@
 
     <modules>
         <module>ui</module>
-        <module>routes</module>
         <module>utils</module>
         <module>passenger</module>
+        <module>driver</module>
+        <module>trip</module>
+        <module>billing</module>
+        <module>notification</module>
     </modules>
 
     <properties>

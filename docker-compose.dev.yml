@@ -4,14 +4,6 @@ services:
     ports:
       - 8001:2181
 
-  routes:
-    ports:
-      - 3001:8080
-
-  routes-database:
-    ports:
-      - 4001:3306
-
   passenger:
     ports:
       - 3000:8080
@@ -19,3 +11,35 @@ services:
   passenger-database:
     ports:
       - 4000:3306
+
+  trip:
+    ports:
+      - 3001:8080
+
+  trip-database:
+    ports:
+      - 4001:3306
+
+  notification:
+    ports:
+      - 3002:8080
+
+  notification-database:
+    ports:
+      - 4002:3306
+
+  driver:
+    ports:
+      - 3003:8080
+
+  driver-database:
+    ports:
+      - 4003:3306
+
+  billing:
+    ports:
+      - 3004:8080
+
+  billing-database:
+    ports:
+      - 4004:3306
