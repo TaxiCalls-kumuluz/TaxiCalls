@@ -166,6 +166,16 @@ services:
         max-size: "10m"
         max-file: "10"
 
+  gateway:
+    build: gateway
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
 volumes:
   passenger-data:
   trip-data:

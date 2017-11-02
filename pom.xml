@@ -19,6 +19,7 @@
         <module>trip</module>
         <module>billing</module>
         <module>notification</module>
+        <module>gateway</module>
     </modules>
 
     <properties>
