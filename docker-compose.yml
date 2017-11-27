@@ -108,6 +108,16 @@ services:
         max-size: "10m"
         max-file: "10"
 
+  notification-mongodb:
+    image: mongo
+    expose:
+      - 27017
+    restart: unless-stopped
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
   driver:
     build: driver
     links:
